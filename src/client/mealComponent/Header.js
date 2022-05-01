@@ -4,8 +4,8 @@ import "./Meal.css";
 
 function Header() {
   return (
-    <div className="container">
-      <header>Meal Sharing App</header>
+    <div className="main-header">
+      <header>Fancy Meal Sharing App</header>
     </div>
   );
 }

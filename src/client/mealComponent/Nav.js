@@ -4,31 +4,37 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 
 function Nav() {
-  const navStyle = {
-    color: "black",
+  const [query, setQuery] = useState("");
+  const url = `http://localhost:3000/api/meals`;
+  async function getMealData() {
+    const result = await Axios.get(url);
+    console.log(result.data);
+  }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    getMealData();
   };
-  // const [timeoutId, setTimeoutId] = useState();
-  // const fetchMealData = async (searchString) => {
-  //   const response = await Axios.get(`http://localhost:3000/api/reservations`);
-  // };
 
-  // const onTextChange = (event) => {
-  //   clearTimeout(timeoutId);
-  //   const timeOut = setTimeout(() => fetchMealData(event.target.value), 500);
-  //   setTimeoutId(timeOut);
-  // };
   return (
     <nav>
       <h3>Logo</h3>
       <div className="search-component">
-        <input
-          className="search-input"
-          placeholder="search-meal"
-          //onChange={onTextChange}
-        />
+        <form className="search-form" onSubmit={onSubmit}>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="search-meal"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <input className="submit-btn" type="submit" value="search" />
+        </form>
       </div>
       <ul className="nav-links">
-        <Link style={navStyle} to="/reservations">
+        <Link to="/">
+          <li>Home</li>
+        </Link>
+        <Link to="/reservations">
           <li>Reservations</li>
         </Link>
         <Link to="/meals">
@@ -37,8 +43,8 @@ function Nav() {
         <Link to="/review">
           <li>Review</li>
         </Link>
-        <Link to="/contact">
-          <li>Contact</li>
+        <Link to="/about">
+          <li>About</li>
         </Link>
       </ul>
     </nav>

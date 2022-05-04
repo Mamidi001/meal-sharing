@@ -1,5 +1,6 @@
 const express = require("express");
-const { max } = require("../database");
+//const { max } = require("../database");
+const { request } = require("express");
 const router = express.Router();
 const knex = require("../database");
 // Parse URL-encoded bodies (as sent by HTML forms)
@@ -7,18 +8,26 @@ router.use(express.urlencoded({ extended: true }));
 // Parse JSON bodies (as sent by API clients)
 router.use(express.json());
 
+router.get("/", async (request, response) => {
+  try {
+    const allReservations = await knex("reservation");
+    response.json(allReservations);
+  } catch (error) {
+    throw error;
+  }
+});
+
 router.get("/:id", async (request, response) => {
   try {
-    const inputId = Number(request.params.id);
-    if (isNaN(inputId)) {
-      response.send("not a valid id");
-    } else {
-      const specificId = await knex("reservation").where(
-        "id",
-        request.params.id
-      );
-      response.json(specificId);
-    }
+    // const inputId = Number(request.params.id);
+    // if (isNaN(inputId)) {
+    //   response.send("not a valid id");
+    // } else {
+    const specificId = await knex("reservation").where({
+      id: request.params.id,
+    });
+    response.json(specificId);
+    //}
   } catch (error) {
     throw error;
   }

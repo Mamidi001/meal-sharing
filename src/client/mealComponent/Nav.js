@@ -17,7 +17,7 @@ function Nav() {
 
   return (
     <nav>
-      <h3>Logo</h3>
+      <h3 className="logo">Logo</h3>
       <div className="search-component">
         <form className="search-form" onSubmit={onSubmit}>
           <input

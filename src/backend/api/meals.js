@@ -1,6 +1,6 @@
 const express = require("express");
-const Knex = require("knex");
-const app = require("../app");
+//const Knex = require("knex");
+//const app = require("../app");
 const { limit, sum } = require("../database");
 const router = express.Router();
 const knex = require("../database");
@@ -90,19 +90,19 @@ router.delete("/:id", async (request, response) => {
 
 //Get meals that has a price smaller than maxPrice
 router.get("/", async (request, response) => {
-  let datageneral = await knex("meal");
+  let titles = await knex("meal");
   if ("maxPrice" in request.query) {
     const maxPrice = Number(request.query.maxPrice);
-    if (isNaN(maxPrice)) {
+    if (isNaN(request.query.maxPrice)) {
       return response.send("not a number");
     } else {
-      datageneral = datageneral.where("meal.price", "<=", maxPrice);
+      titles = titles.where("meal.price", "<", maxPrice);
     }
   }
 
   //Get meals that still has available reservations
   if ("availableReservation" in request.query) {
-    datageneral = datageneral
+    titles = titles
       //const availableReservations = await knex("meal")
       .join("reservation", "meal.id", "=", "reservation.meal_id")
       .select(
@@ -124,7 +124,7 @@ router.get("/", async (request, response) => {
     if (!isNaN(request.query.title)) {
       return response.send("not a valid title");
     } else {
-      datageneral = datageneral.where("meal.title", "like", "%" + title + "%");
+      titles = titles.where("meal.title", "like", "%" + title + "%");
     }
   }
 
@@ -132,23 +132,23 @@ router.get("/", async (request, response) => {
 
   if ("createdAfter" in request.query) {
     const createdAfter = new Date(request.query.createdAfter);
-    datageneral = datageneral.where("meal.created_date", "<", createdAfter);
+    titles = titles.where("meal.created_date", "<", createdAfter);
   }
   if ("limit" in request.query) {
     const getLimitMeal = Number(request.query.limit);
     if (isNaN(request.query.limit)) {
       return response.send("not a number");
     } else {
-      datageneral = datageneral.limit(getLimitMeal);
+      titles = titles.limit(getLimitMeal);
     }
   }
   try {
-    const mealsResult = await datageneral;
-    if (mealsResult.lenght === 0) {
-      response.json("no meals found");
-    } else {
-      response.json(mealsResult);
-    }
+    const mealsResult = await titles;
+    // if (mealsResult.lenght === 0) {
+    //   response.json("no meals found");
+    // } else {
+    response.json(mealsResult);
+    //}
   } catch (error) {
     throw error;
   }

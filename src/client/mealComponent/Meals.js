@@ -28,19 +28,22 @@ function Meals() {
   const meals = meal.map((items, index) => {
     return (
       <div className="meal-deco" key={index}>
-        <Link exact to={`meals/${items.id}`}>
-          <h2>{items.title}</h2>
-          <h2>Id: {items.id}</h2>
-          <img
-            className="meal-img"
-            src="https://static.toiimg.com/photo/76942221.cms"
-          />
-          <h4> {items.description} </h4>
-          <p>Price : {items.price} dkk</p>
-        </Link>
-        <Link exact to={`/reviews`}>
-          <button className="Add review">Add review</button>
-        </Link>
+        <div>
+          <Link exact to={`meals/${items.id}`}>
+            {" "}
+            <h2>{items.title}</h2>
+            <h2>Id: {items.id}</h2>
+            <img
+              className="meal-img"
+              src="https://static.toiimg.com/photo/76942221.cms"
+            />
+            <h4> {items.description} </h4>
+            <p>Price : {items.price} dkk</p>
+          </Link>
+          <Link exact to={`/reviews`}>
+            <button className="Add review">Add review</button>
+          </Link>
+        </div>
       </div>
     );
   });

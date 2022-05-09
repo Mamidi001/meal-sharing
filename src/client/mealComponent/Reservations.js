@@ -29,11 +29,10 @@ function Reservations() {
         {" "}
         <button>Add Reservation</button>
       </Link>
-      <img
-        className="reservation-pic"
+      <div className="reservation-pic">
         src="https://alsik.dk/wp-content/uploads/2021/05/Alsik_menu_maj_2021-57_web-scaled.jpg"
         alt="reservation pic"
-      />
+      </div>
 
       <h2>{reservations}</h2>
     </div>

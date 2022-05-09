@@ -40,8 +40,8 @@ function Meals() {
             <h4> {items.description} </h4>
             <p>Price : {items.price} dkk</p>
           </Link>
-          <Link exact to={`/reviews`}>
-            <button className="Add review">Add review</button>
+          <Link exact to={`addreservation/${items.id}`}>
+            <button className="Add review">Add Reservation</button>
           </Link>
         </div>
       </div>

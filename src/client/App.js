@@ -10,6 +10,7 @@ import Header from "./mealComponent/Header";
 import SpecificId from "./mealComponent/SpecificId";
 import About from "./mealComponent/About";
 import HomePage from "./mealComponent/HomePage";
+import AddMeal from "./mealComponent/AddMeal";
 
 import "./Meal.css";
 
@@ -22,11 +23,16 @@ function App() {
       <Switch>
         <Route path="/meals" exact component={Meals}></Route>
         <Route path="/reservations" exact component={Reservations}></Route>
-        <Route path="/addreservation" exact component={AddReservation}></Route>
+        <Route
+          path="/addreservation/:id"
+          exact
+          component={AddReservation}
+        ></Route>
         <Route path="/review" exact component={Review}></Route>
         <Route path="/id" exact component={SpecificId}></Route>
         <Route path="/about" exact component={About}></Route>
         <Route path="/" exact component={HomePage}></Route>
+        <Route path="/addmeal/:id" exact component={AddMeal}></Route>
       </Switch>
       <Footer />
     </BrowserRouter>

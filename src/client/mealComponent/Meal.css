@@ -8,7 +8,7 @@ body {
 }
 .main-header {
   align-items: center;
-  background-color: lightskyblue;
+  background-color: white;
   text-align: center;
   color: black;
   width: 100%;
@@ -24,7 +24,7 @@ nav {
   justify-content: space-between;
   text-align: center;
   align-items: center;
-  background-color: rgb(202, 232, 247);
+  background-color: rgba(128, 128, 128, 0.336);
   color: black;
   min-height: 10vh;
   width: 100%;
@@ -42,7 +42,7 @@ nav {
   list-style: none;
 }
 nav li {
-  color: rgb(0, 89, 255);
+  color: black;
 }
 .search-component {
   margin: 1rem;
@@ -50,36 +50,17 @@ nav li {
   flex-direction: column;
 }
 .search-input {
-  /*width: 150px;
-  height: 30px;
-  border: none;
-  outline: none;
-  border-radius: 20px;
-  padding: 0.3rem 1rem;*/
   padding: 6px 16px;
   min-width: 200px;
   max-width: 100vw;
   font-size: 15px;
   border-radius: 4px;
 }
-.search-form {
-  background-color: brown;
-}
-.submit-btn {
-  position: absolute;
-  top: 78px;
-  padding: 6px 16px;
-  margin-left: 6px;
-  background-color: rgb(82, 170, 243);
-  color: black;
-  border-radius: 6px;
-}
 .home-container {
   width: 100%;
   padding: 0;
   margin: 0;
 }
-
 .home-pic {
   width: 100%;
   height: 250px;
@@ -96,18 +77,14 @@ nav li {
 .footer {
   bottom: 0;
   width: 100vw;
-
-  position: fixed;
 }
 footer .nav {
-  /* this is footer navigation */
   display: flex;
   justify-content: space-between;
   width: auto;
   flex-direction: row;
   list-style-type: none;
-  border: 1px solid #0059b3;
-  background-color: rgb(202, 232, 247);
+  background-color: rgba(128, 128, 128, 0.336);
   color: black;
 }
 
@@ -119,7 +96,7 @@ ul {
 header nav a,
 footer nav a {
   /* for header and footer  */
-  color: #3385ff;
+  color: black;
   text-decoration: none;
   font-size: 12px;
 }
@@ -149,13 +126,9 @@ footer nav {
 .meal-deco {
   width: 30%;
   padding: 20px;
-
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 0, 0, 0),
-    rgb(142, 232, 248)
-  );
-
+  background-image: linear-gradient(to right, white, black);
+  border-radius: 8px 8px 8px 0;
+  border: black;
   margin-bottom: 25px;
   text-align: center;
   align-items: center;
@@ -168,13 +141,17 @@ footer nav {
 .meal-menu {
   justify-content: center;
   text-align: center;
+  font-size: 20px;
+  padding: 10px 0 10px 0;
 }
 .all-meals {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  background-color: rgb(188, 233, 247);
+  background-color: white;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 .reservation-pic {
   width: 100%;
@@ -195,6 +172,17 @@ footer nav {
   height: 100%;
   object-fit: cover;
 }
+.search-input {
+  justify-content: center;
+  border: black 2px solid;
+  font-size: 16px;
+  text-align: center;
+  margin-left: 41%;
+  margin-bottom: 10px;
+}
+.Add-review {
+  background: #000;
+}
 
 /*.heading {
   color: white;
@@ -204,6 +192,18 @@ footer nav {
   padding-top: 2rem;
   text-align: center;
   text-shadow: brown;
+}
+/*.search-form {
+  background-color: brown;
+}
+.submit-btn {
+  position: absolute;
+  top: 78px;
+  padding: 6px 16px;
+  margin-left: 6px;
+  background-color: rgb(82, 170, 243);
+  color: black;
+  border-radius: 6px;
 }
 .heading h4 {
   color: white;

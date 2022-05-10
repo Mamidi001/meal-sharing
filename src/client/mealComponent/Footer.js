@@ -2,10 +2,10 @@ import React from "react";
 import "./Meal.css";
 function Footer() {
   return (
-    <footer class="footer">
-      <nav class="nav">
-        <div class="row">
-          <h4 class="footer-heading">Features</h4>
+    <footer className="footer">
+      <nav className="nav">
+        <div className="row">
+          <h4 className="footer-heading">Features</h4>
           <ul>
             <li>
               <a href="#">Help Center</a>
@@ -21,8 +21,8 @@ function Footer() {
             </li>
           </ul>
         </div>
-        <div class="row">
-          <h4 class="footer-heading">Support</h4>
+        <div className="row">
+          <h4 className="footer-heading">Support</h4>
           <ul>
             <li>
               <a href="#" id="home-menu">
@@ -40,8 +40,8 @@ function Footer() {
             </li>
           </ul>
         </div>
-        <div class="row">
-          <h4 class="footer-heading">Trending</h4>
+        <div className="row">
+          <h4 className="footer-heading">Trending</h4>
           <ul>
             <li>
               <a href="#">Shop</a>
@@ -54,8 +54,8 @@ function Footer() {
             </li>
           </ul>
         </div>
-        <div class="row">
-          <h4 class="footer-heading">Get to know us</h4>
+        <div className="row">
+          <h4 className="footer-heading">Get to know us</h4>
           <ul>
             <li>
               <a href="#">Corporate</a>
@@ -71,39 +71,8 @@ function Footer() {
             </li>
           </ul>
         </div>
-        {/* <div class="row">
-          <h4 class="footer-heading">Instagram Photos</h4>
-          <input
-            class="footer-input"
-            type="text"
-            placeholder="Fetching photos from instagram..."
-          />
-        </div> */}
       </nav>
     </footer>
-    //<div className="footer">
-
-    /* <ul>
-          <li>About us</li>
-          <li>Career</li>
-          <li>Find us</li>
-        </ul>
-        <div>
-          <ul>
-            <li>About us</li>
-            <li>Career</li>
-            <li>Find us</li>
-          </ul>
-        </div>
-        <div>
-          <ul>
-            <li>About us</li>
-            <li>Career</li>
-            <li>Find us</li>
-          </ul>
-        </div>
-      </div>
-    // */
   );
 }
 export default Footer;

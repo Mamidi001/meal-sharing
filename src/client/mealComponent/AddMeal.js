@@ -1,10 +1,9 @@
 import "./Meal.css";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import e from "express";
 
 function AddMeal() {
-  //const { id } = useParams();
-  //console.log(id);
   const [editInfo, setEditInfo] = useState({
     title: "",
     description: "",
@@ -15,9 +14,27 @@ function AddMeal() {
     created_date: "",
   });
 
-  const hadleSubmitTitle = () => setEditInfo(e.target.title);
+  const hadleSubmitTitle = () =>
+    setEditInfo((oldtitles) => ({
+      ...oldtitles,
+      [e.target.title]: e.target.value,
+    }));
+  const hadleSubmitDescription = () => setEditInfo(e.target.description);
+  const hadleSubmitLocation = () => setEditInfo(e.target.location);
+  const hadleSubmitWhen = () => setEditInfo(e.target.when);
+  const hadleSubmitMaxReservation = () =>
+    setEditInfo(e.target.max_reservations);
+  const hadleSubmitPrice = () => setEditInfo(e.target.price);
+  const hadleSubmitCreatedDate = () => setEditInfo(e.target.created_date);
 
-  return <div></div>;
+  return (
+    <div>
+      <h1>Add meal page</h1>
+      <form>
+        <input type="text" placeholder="title" />
+      </form>
+    </div>
+  );
 }
 
 export default AddMeal;

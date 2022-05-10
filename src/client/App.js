@@ -7,10 +7,10 @@ import Review from "./mealComponent/Review";
 import Nav from "./mealComponent/Nav";
 import Footer from "./mealComponent/Footer";
 import Header from "./mealComponent/Header";
-import SpecificId from "./mealComponent/SpecificId";
-import About from "./mealComponent/About";
+//import SpecificId from "./mealComponent/SpecificId";
+//import About from "./mealComponent/About";
 import HomePage from "./mealComponent/HomePage";
-import AddMeal from "./mealComponent/AddMeal";
+//import AddMeal from "./mealComponent/AddMeal";
 
 import "./Meal.css";
 
@@ -29,10 +29,7 @@ function App() {
           component={AddReservation}
         ></Route>
         <Route path="/review" exact component={Review}></Route>
-        <Route path="/id" exact component={SpecificId}></Route>
-        <Route path="/about" exact component={About}></Route>
         <Route path="/" exact component={HomePage}></Route>
-        <Route path="/addmeal/:id" exact component={AddMeal}></Route>
       </Switch>
       <Footer />
     </BrowserRouter>

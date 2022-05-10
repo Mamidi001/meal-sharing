@@ -1,82 +1,23 @@
 const express = require("express");
-const app = require("../app");
-//const { max } = require("../database");
+const { limit, sum } = require("../database");
 const router = express.Router();
 const knex = require("../database");
+router.use(express.urlencoded({ extended: true }));
+router.use(express.json());
 
-//Get meals that has a price smaller than maxPrice
-router.get("/", async (request, response) => {
-  console.log("akjdskank");
-  if ("maxPrice" in request.query) {
-    const dataTable = await knex("meal").where(
-      "price",
-      "<",
-      Number(request.query.maxPrice)
-    );
-    return response.json(dataTable);
-  }
-
-  //Get meals that still has available reservations
-  if ("availableReservation" in request.query) {
-    const availableReservations = await knex("meal")
-      .join("reservation", "reservation.meal_id", "=", "meal.id")
-      .where("max_reservations", ">", "number_of_guests");
-    response.json(availableReservations);
-  }
-  // Get meals that partially match a title
-  if ("title" in request.query) {
-    const getTitle = await knex("meal").where("title", "like", "%pasta%");
-    response.json(getTitle);
-  }
-  //Get meals that has been created after the date
-  // if (createdAfter in request.query) {
-  //   const getCreatedDate = await knex("meal").where(function () {
-  //     this.where("created_date", ">", "2022-01-20");
-  //   });
-  //   response.json(getCreatedDate);
-  // }
-  if ("createdAfter" in request.query) {
-    const createdAfter = await knex("meal").where(
-      "created_date",
-      ">",
-      "2022-01-20" //we can also give request.query.createdAfter
-    );
-
-    if (createdAfter.length === 0) {
-      return response
-        .status(404)
-        .json({ Error: "No meal found created this date" });
-    }
-    return response.json(createdAfter);
-  }
-  // Only specific number of meals with a specific max price
-  if ("limit" in request.query && "maxPrice" in request.query) {
-    const getLimit = knex("meal")
-      .select("maxPrice")
-      .where({
-        price: 100,
-        max_reservations: 25,
-      }) //we can write like...it read the url value"price", "<", request.query.maxPrice
-      .limit(request.query.limit);
-  }
-  //Only specific number of meals
-  if ("limit" in request.query) {
-    const getLimitMeal = await knex("meal").limit(request.query.limit);
-    response.json(getLimitMeal);
-  }
-});
-
-//returns meal by id
-router.get("/", async (request, response) => {
+router.get("/:id", async (request, response) => {
   try {
-    const allMeals = await knex("meal");
-    response.json(allMeals);
+    const inputNumber = Number(request.params.id);
+    if (isNaN(inputNumber)) {
+      response.send("not a valid id");
+    } else {
+      const specificMeal = await knex("meal").where("id", request.params.id);
+      response.json(specificMeal);
+    }
   } catch (error) {
     throw error;
   }
 });
-
-//add a new meal
 router.post("/", async (request, response) => {
   try {
     const updateMeal = await knex("meal").insert({
@@ -94,23 +35,14 @@ router.post("/", async (request, response) => {
   }
 });
 
-//returns by id
-router.get("/:id", async (request, response) => {
-  try {
-    const specificMeal = await knex("meal").where("id", request.params.id);
-    response.json(specificMeal);
-  } catch (error) {
-    throw error;
-  }
-});
-
 //update the meal by id
 router.put("/:id", async (request, response) => {
   try {
-    const updatedMeal = await knex("meal")
-      .where("id", request.params.id)
-      .update(request.body);
-    response.json(updatedMeal);
+    const inputId = Number(request.params.id);
+    const meals = knex("meal");
+    const updatedMeal = meals.where({ id: inputId }).update(request.body);
+    const updatedId = await updatedMeal;
+    response.json(updatedId);
   } catch (error) {
     throw error;
   }
@@ -119,12 +51,147 @@ router.put("/:id", async (request, response) => {
 //delete a meal by id
 router.delete("/:id", async (request, response) => {
   try {
-    const deletedMeal = await knex("meal")
-      .where("id", request.params.id)
-      .delete(request.body);
-    response.json(deletedMeal);
+    const meals = await knex("meal").select("*");
+    const inputId = Number(request.params.id);
+    const maxIdMeal = meals.map((meal) => meal.id);
+    const largenum = Math.max(...maxIdMeal);
+    if (isNaN(inputId)) {
+      response.send("id is not a number");
+    } else if (inputId > largenum) {
+      response.send(`the largest id is : ${largenum}`);
+    } else {
+      let mealsTable = knex("meal");
+      const deletedMeal = await mealsTable
+        .where({ id: request.params.id })
+        .delete();
+      response.json(deletedMeal);
+    }
   } catch (error) {
     throw error;
   }
 });
+router.get("/", async (request, response) => {
+  let meals = knex("meal");
+  if ("maxPrice" in request.query) {
+    const maxPrice = Number(request.query.maxPrice);
+    if (isNaN(maxPrice)) {
+      return response.send("Not a number");
+    } else {
+      meals = meals.where("meal.price", "<=", maxPrice);
+    }
+  }
+  // how about there is only meals in mealtable and don't have reservation now but still avalibale for book the seats.
+  if ("availableReservations" in request.query) {
+    meals = meals
+      .join("reservation", "meal.id", "=", "reservation.meal_id")
+      .select(
+        "meal.id",
+        "title",
+        "max_reservations",
+        knex.raw("SUM(number_of_guests) AS total_guests"),
+        knex.raw(
+          '(max_reservations-SUM(number_of_guests)) AS "AvailableReservation"'
+        )
+      )
+      .where("max_reservations", ">", "number_of_guests")
+      .groupBy("meal_id")
+      .having(knex.raw("(max_reservations-SUM(number_of_guests)) > 0"));
+  }
+  if ("title" in request.query) {
+    const title = request.query.title.toLowerCase();
+    if (!isNaN(request.query.title)) {
+      return response.send("Not a valid title");
+    } else {
+      meals = meals.where("meal.title", "like", "%" + title + "%");
+    }
+  }
+  if ("createdAfter" in request.query) {
+    const createdAfter = new Date(request.query.createdAfter);
+    meals = meals.where("meal.created_date", "<", createdAfter);
+  }
+  if ("limit" in request.query) {
+    const limit = Number(request.query.limit);
+    if (isNaN(request.query.limit)) {
+      return response.send("Not a number");
+    } else {
+      meals = meals.limit(limit);
+    }
+  }
+  try {
+    const mealsResult = await meals;
+    if (mealsResult.length === 0) {
+      response.json([]);
+    } else {
+      response.json(mealsResult);
+    }
+  } catch (error) {
+    throw error;
+  }
+});
+//Get meals that has a price smaller than maxPrice
+// router.get("/", async (request, response) => {
+//   let titles = await knex("meal");
+//   if ("maxPrice" in request.query) {
+//     const maxPrice = Number(request.query.maxPrice);
+//     if (isNaN(request.query.maxPrice)) {
+//       return response.send("not a number");
+//     } else {
+//       titles = titles.where("meal.price", "<", maxPrice);
+//     }
+//   }
+
+//   //Get meals that still has available reservations
+//   if ("availableReservation" in request.query) {
+//     titles = titles
+//       //const availableReservations = await knex("meal")
+//       .join("reservation", "meal.id", "=", "reservation.meal_id")
+//       .select(
+//         "meal.id",
+//         "title",
+//         "max_reservations",
+//         knex.raw("SUM(number_of_guests) AS total_guests"),
+//         knex.raw(
+//           '(max_reservations-SUM(number_of_guests)) AS "Available Reservation"'
+//         )
+//       )
+//       .where("max_reservations", ">", "number_of_guests")
+//       .groupBy("meal_id")
+//       .having(knex.raw("(max_reservations-SUM(number_of_guests)) > 0"));
+//   }
+//   // Get meals that partially match a title
+//   if ("title" in request.query) {
+//     const title = request.query.title.toLowerCase();
+//     if (!isNaN(request.query.title)) {
+//       return response.send("not a valid title");
+//     } else {
+//       titles = titles.where("meal.title", "like", "%" + title + "%");
+//     }
+//   }
+
+//   //Get meals that has been created after the date
+
+//   if ("createdAfter" in request.query) {
+//     const createdAfter = new Date(request.query.createdAfter);
+//     titles = titles.where("meal.created_date", "<", createdAfter);
+//   }
+//   if ("limit" in request.query) {
+//     const getLimitMeal = Number(request.query.limit);
+//     if (isNaN(request.query.limit)) {
+//       return response.send("not a number");
+//     } else {
+//       titles = titles.limit(getLimitMeal);
+//     }
+//   }
+//   try {
+//     const mealsResult = await titles;
+//     // if (mealsResult.lenght === 0) {
+//     //   response.json("no meals found");
+//     // } else {
+//     response.json(mealsResult);
+//     //}
+//   } catch (error) {
+//     throw error;
+//   }
+// });
+
 module.exports = router;

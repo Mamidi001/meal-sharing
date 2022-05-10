@@ -23,7 +23,7 @@ function AddReservation() {
       meal_id: id,
     };
 
-    fetch("http://localhost:3000/api/reservations", {
+    fetch("/api/reservations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,10 +99,13 @@ function AddReservation() {
           </label>
           <button type="submit">Add Reservation </button>
         </form>
-        <img
-          src="https://media.istockphoto.com/photos/restaurant-reserved-table-sign-picture-id675913544?k=20&m=675913544&s=612x612&w=0&h=gMeHfTJnBvPGW-RUGoZ-pamN5G_Dp09LxqRZugKXiJs="
-          alt="reservation table pic"
-        ></img>
+        <div className="addReservation-img">
+          {" "}
+          <img
+            src="https://media.istockphoto.com/photos/restaurant-reserved-table-sign-picture-id675913544?k=20&m=675913544&s=612x612&w=0&h=gMeHfTJnBvPGW-RUGoZ-pamN5G_Dp09LxqRZugKXiJs="
+            alt="reservation table pic"
+          ></img>{" "}
+        </div>
       </div>
     </div>
   );

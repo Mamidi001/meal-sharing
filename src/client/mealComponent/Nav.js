@@ -22,12 +22,12 @@ function Nav() {
         <Link to="/meals">
           <li>Meals</li>
         </Link>
-        <Link to="/review">
+        {/* <Link to="/review">
           <li>Review</li>
-        </Link>
-        <Link exact to={`addmeal/`}>
+        </Link> */}
+        {/* <Link exact to={`addmeal/`}>
           <button className="Add-meal">Add Meal</button>
-        </Link>
+        </Link> */}
         {/* <Link to="/addmeal">
           <li>Add Meal</li>
         </Link> */}

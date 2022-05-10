@@ -3,14 +3,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Meals from "./mealComponent/Meals";
 import Reservations from "./mealComponent/Reservations";
 import AddReservation from "./mealComponent/AddReservation";
-import Review from "./mealComponent/Review";
 import Nav from "./mealComponent/Nav";
 import Footer from "./mealComponent/Footer";
 import Header from "./mealComponent/Header";
-//import SpecificId from "./mealComponent/SpecificId";
-//import About from "./mealComponent/About";
 import HomePage from "./mealComponent/HomePage";
-//import AddMeal from "./mealComponent/AddMeal";
 
 import "./Meal.css";
 
@@ -28,7 +24,6 @@ function App() {
           exact
           component={AddReservation}
         ></Route>
-        <Route path="/review" exact component={Review}></Route>
         <Route path="/" exact component={HomePage}></Route>
       </Switch>
       <Footer />

@@ -17,9 +17,7 @@ function Meals() {
     fetchSearchMeals();
   }, [query]);
   const fetchSearchMeals = async () => {
-    const searchFetchData = await fetch(
-      `http://localhost:3000/api/meals?title=${query}`
-    );
+    const searchFetchData = await fetch(`api/meals?title=${query}`);
     const fetchSearchResult = await searchFetchData.json();
     setMeal(fetchSearchResult);
   };

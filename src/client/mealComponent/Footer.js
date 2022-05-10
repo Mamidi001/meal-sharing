@@ -1,5 +1,6 @@
 import React from "react";
 import "./Meal.css";
+import { Link } from "react-router-dom";
 function Footer() {
   return (
     <footer className="footer">
@@ -7,68 +8,44 @@ function Footer() {
         <div className="row">
           <h4 className="footer-heading">Features</h4>
           <ul>
-            <li>
-              <a href="#">Help Center</a>
-            </li>
-            <li>
-              <a href="#">Paid with mobile</a>
-            </li>
-            <li>
-              <a href="#">Status</a>
-            </li>
-            <li>
-              <a href="#">Contact Support</a>
-            </li>
+            <Link>
+              <li>Help Center</li>
+              <li>Paid with mobile</li>
+              <li>Status</li>
+              <li>Contact Support</li>
+            </Link>
           </ul>
         </div>
         <div className="row">
           <h4 className="footer-heading">Support</h4>
           <ul>
-            <li>
-              <a href="#" id="home-menu">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">FAQ's</a>
-            </li>
-            <li>
-              <a href="#">Support</a>
-            </li>
+            <Link>
+              <li>Home</li>
+              <li>About</li>
+              <li>FAQ's</li>
+              <li>Support</li>
+            </Link>
           </ul>
         </div>
         <div className="row">
           <h4 className="footer-heading">Trending</h4>
           <ul>
-            <li>
-              <a href="#">Shop</a>
-            </li>
-            <li>
-              <a href="#">Portfolio</a>
-            </li>
-            <li>
-              <a href="#">Blog</a>
-            </li>
+            <Link>
+              <li>Shop</li>
+              <li>Portfolio</li>
+              <li>Blog</li>
+            </Link>
           </ul>
         </div>
         <div className="row">
           <h4 className="footer-heading">Get to know us</h4>
           <ul>
-            <li>
-              <a href="#">Corporate</a>
-            </li>
-            <li>
-              <a href="#">Agency</a>
-            </li>
-            <li>
-              <a href="#">eCommerce</a>
-            </li>
-            <li>
-              <a href="#">Personal</a>
-            </li>
+            <Link>
+              <li>Corporate</li>
+              <li>Agency</li>
+              <li>eCommerce</li>
+              <li>Personal</li>
+            </Link>
           </ul>
         </div>
       </nav>

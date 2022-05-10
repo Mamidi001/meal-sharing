@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Meal.css";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 function Reservations() {
   const [reservation, setReservation] = useState([]);
@@ -8,7 +8,7 @@ function Reservations() {
     fetchReservations();
   }, []);
   const fetchReservations = async () => {
-    const data = await fetch("http://localhost:3000/api/reservations");
+    const data = await fetch("/api/reservations");
     const fetchResult = await data.json();
     setReservation(fetchResult);
   };

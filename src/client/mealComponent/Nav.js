@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 
 function Nav() {
-  const url = `http://localhost:3000/api/meals`;
+  const url = `/api/meals`;
   async function getMealData() {
     const result = await Axios.get(url);
     console.log(result.data);
@@ -22,18 +22,24 @@ function Nav() {
         <Link to="/meals">
           <li>Meals</li>
         </Link>
-        {/* <Link to="/review">
-          <li>Review</li>
-        </Link> */}
-        {/* <Link exact to={`addmeal/`}>
-          <button className="Add-meal">Add Meal</button>
-        </Link> */}
-        {/* <Link to="/addmeal">
-          <li>Add Meal</li>
-        </Link> */}
       </ul>
     </nav>
   );
 }
 
 export default Nav;
+{
+  /* <Link to="/review">
+          <li>Review</li>
+        </Link> */
+}
+{
+  /* <Link exact to={`addmeal/`}>
+          <button className="Add-meal">Add Meal</button>
+        </Link> */
+}
+{
+  /* <Link to="/addmeal">
+          <li>Add Meal</li>
+        </Link> */
+}
